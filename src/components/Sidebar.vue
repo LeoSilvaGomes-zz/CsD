@@ -2,175 +2,178 @@
   <div 
     class="container-sidebar"
   >
-    <div class="search-container">
-      <font-awesome-icon
-        icon="search"
-        style="color: #1a1919b6;"
-        class="font-awesome-search"
-      />
-      <input 
-        type="text" 
-        class="input" 
-        v-model="searchDeputado"
-        @focus="handleFocus"
-      >
-    </div>
-    <div 
-      class="filter-container"
-      @click="select()"
-    >
-      <p style="font-size: 90%;"><b>Filtro</b></p>
-      <font-awesome-icon
-          :icon="iconFilter"
+    <div class="content-sidebar">
+      <div class="search-container">
+        <font-awesome-icon
+          icon="search"
           style="color: #1a1919b6;"
-          class="font-awesome-filter"
-      />
-    </div>
-    <div 
-      class="filter-content"
-      :style="display"
-    >
+          class="font-awesome-search"
+        />
+        <input 
+          type="text" 
+          class="input" 
+          v-model="searchDeputado"
+          @focus="handleFocus"
+        >
+      </div>
       <div 
-        class="uf-filter"
-        @click="selectUfs()"
+        class="filter-container"
+        @click="select()"
       >
-        <div style="display: flex; justify-content: space-between; width: 100%;">    
-          <p style="font-size: 90%;"><b>UF</b></p>
-          <font-awesome-icon
-              :icon="iconFilterUf"
-              style="color:#1a1919b6;"
-              class="font-awesome-filter"
-          />
+        <p style="font-size: 90%;"><b>Filtro</b></p>
+        <font-awesome-icon
+            :icon="iconFilter"
+            style="color: #1a1919b6;"
+            class="font-awesome-filter"
+        />
+      </div>
+      <div 
+        class="filter-content"
+        :style="display"
+      >
+        <div 
+          class="uf-filter"
+          @click="selectUfs()"
+        >
+          <div style="display: flex; justify-content: space-between; width: 100%;">    
+            <p style="font-size: 90%;"><b>UF</b></p>
+            <font-awesome-icon
+                :icon="iconFilterUf"
+                style="color:#1a1919b6;"
+                class="font-awesome-filter"
+            />
+          </div>
+
+          <div 
+            class="uf-container"
+            :style="displayUf"  
+          >
+            <div
+              class="uf-content"
+              v-for="uf in brstates"
+              :key="uf"
+              @click="filterUf(uf)"
+            >
+              {{ uf }}
+            </div>
+          </div>
         </div>
 
         <div 
-          class="uf-container"
-          :style="displayUf"  
+          class="partido-filter"
+          @click="selectPartido()"
         >
-          <div
-            class="uf-content"
-            v-for="uf in brstates"
-            :key="uf"
-            @click="filterUf(uf)"
+          <div style="display: flex; justify-content: space-between; width: 100%;">    
+            <p style="font-size: 90%;"><b>Partido</b></p>
+            <font-awesome-icon
+                :icon="iconFilterPartido"
+                style="color:#1a1919b6;"
+                class="font-awesome-filter"
+            />
+          </div>
+
+          <div 
+            class="partido-container"
+            :style="displayPartido"  
           >
-            {{ uf }}
+            <div
+              class="uf-content"
+              v-for="partido in partidos"
+              :key="partido.sigla"
+              @click="filterPartido(partido)"
+            >
+              {{ partido.sigla }}
+            </div>
           </div>
         </div>
       </div>
-
+      
       <div 
-        class="partido-filter"
-        @click="selectPartido()"
+        class="deputados-container"
+        :style="height"
       >
-        <div style="display: flex; justify-content: space-between; width: 100%;">    
-          <p style="font-size: 90%;"><b>Partido</b></p>
-          <font-awesome-icon
-              :icon="iconFilterPartido"
-              style="color:#1a1919b6;"
-              class="font-awesome-filter"
-          />
-        </div>
-
         <div 
-          class="partido-container"
-          :style="displayPartido"  
+          v-for="deputado in filteredDeputados"
+          :key="deputado.nome"
+          @click="selectDeputado(deputado.id)"
         >
           <div
-            class="uf-content"
-            v-for="partido in partidos"
-            :key="partido.sigla"
-            @click="filterPartido(partido)"
-          >
-            {{ partido.sigla }}
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div 
-      class="deputados-container"
-      :style="height"
-    >
-      <div 
-        v-for="deputado in filteredDeputados"
-        :key="deputado.nome"
-      >
-        <div
-          v-if="filteredPartido == ''"
-        >
-          <div
-            class="deputados-content"
-            v-if="filteredUf == ''"
+            v-if="filteredPartido == ''"
           >
             <div
-              class="nome-content"
+              class="deputados-content"
+              v-if="filteredUf == ''"
             >
-              <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
-            </div>
-
-            <div
-              class="info-content"
-            >
-              <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
-              <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
-            </div>
-          </div>
-
-          <div
-            class="deputados-content"
-            v-else-if="deputado.siglaUf == filteredUf"
-          >
               <div
-              class="nome-content"
-            >
-              <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
-            </div>
+                class="nome-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
+              </div>
 
-            <div
-              class="info-content"
-            >
-              <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
-              <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-else-if="deputado.siglaPartido == filteredPartido"
-        >
-          <div
-            class="deputados-content"
-            v-if="filteredUf == ''"
-          >
-            <div
-              class="nome-content"
-            >
-              <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
-            </div>
-
-            <div
-              class="info-content"
-            >
-              <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
-              <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
-            </div>
-          </div>
-
-          <div
-            class="deputados-content"
-            v-else-if="deputado.siglaUf == filteredUf"
-          >
               <div
-              class="nome-content"
-            >
-              <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
+                class="info-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
+                <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
+              </div>
             </div>
 
             <div
-              class="info-content"
+              class="deputados-content"
+              v-else-if="deputado.siglaUf == filteredUf"
             >
-              <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
-              <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
+                <div
+                class="nome-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
+              </div>
+
+              <div
+                class="info-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
+                <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
+              </div>
+            </div>
+          </div>
+
+          <div
+            v-else-if="deputado.siglaPartido == filteredPartido"
+          >
+            <div
+              class="deputados-content"
+              v-if="filteredUf == ''"
+            >
+              <div
+                class="nome-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
+              </div>
+
+              <div
+                class="info-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
+                <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
+              </div>
+            </div>
+
+            <div
+              class="deputados-content"
+              v-else-if="deputado.siglaUf == filteredUf"
+            >
+                <div
+                class="nome-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Nome:</b> {{ deputado.nome }}
+              </div>
+
+              <div
+                class="info-content"
+              >
+                <b style="font-size: 90%; color: #1a1919b6;">Partido:</b> {{ deputado.siglaPartido }}
+                <b style="font-size: 90%; color: #1a1919b6;"> UF:</b> {{ deputado.siglaUf }}
+              </div>
             </div>
           </div>
         </div>
@@ -187,6 +190,12 @@
 import axios from 'axios'
 
 export default {
+  props: {
+    id: {
+      default: '',
+      type: String,
+    }
+  },
   data(){
     return {
       isFocused: false,
@@ -329,11 +338,16 @@ export default {
 <style>
 
 .container-sidebar{
-  width: 25%;
   height: 100vh;
   scroll-margin: none;
-  background-color: #f8f8f8;
   display: flow-root;
+  width: 25%;
+}
+
+.content-sidebar{
+  width: 25%;
+  background-color: #f8f8f8;
+  position: fixed;
 }
 
 .info-content{
