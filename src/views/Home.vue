@@ -1,16 +1,19 @@
 <template>
   <div class="container">
     <Sidebar />
+    <DeputadoView />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import Sidebar from '../components/Sidebar'
+import DeputadoView from '../components/DeputadoView'
 
 export default {
   components:{
     Sidebar,
+    DeputadoView,
   },
   created() {
     this.request();
@@ -32,5 +35,9 @@ export default {
 </script>
 
 <style>
+
+.container {
+  display: flex;
+}
 
 </style>

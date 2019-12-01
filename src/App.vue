@@ -14,9 +14,6 @@
 <script>
 
 export default {
-  mounted() {
-    let state = this.$store.state;
-  },
 }
 </script>
 
