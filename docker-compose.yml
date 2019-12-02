@@ -1,7 +1,7 @@
 version: '3'
 services:
-  consde:
-    container_name: consde
+  csd:
+    container_name: csd
     build:
       context: .
       dockerfile: Dockerfile
