@@ -95,7 +95,7 @@
         <div 
           v-for="deputado in filteredDeputados"
           :key="deputado.nome"
-          @click="selectDeputado(deputado.id)"
+          @click="$emit('action', deputado.id)"
         >
           <div
             v-if="filteredPartido == ''"
@@ -190,14 +190,9 @@
 import axios from 'axios'
 
 export default {
-  props: {
-    id: {
-      default: '',
-      type: String,
-    }
-  },
   data(){
     return {
+      id: '',
       isFocused: false,
       deputados: [],
       partidos: ['none'],
@@ -325,7 +320,13 @@ export default {
       else{
         this.filteredPartido = value.sigla;
       }
-    }
+    },
+  },
+  computed: {
+    selectDeputado (value) {
+      this.id = value
+      return this.id
+    },
   }
 
 }

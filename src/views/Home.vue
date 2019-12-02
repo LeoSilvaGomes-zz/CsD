@@ -1,7 +1,11 @@
 <template>
   <div class="container">
-    <Sidebar />
-    <DeputadoView />
+    <Sidebar 
+      @action="idDeputado"
+    />
+    <DeputadoView 
+      :id="idDeputados"
+    />
   </div>
 </template>
 
@@ -18,7 +22,16 @@ export default {
   created() {
     this.request();
   },
+  data() {
+    return {
+      idDeputados: '',
+    }
+  },
   methods: {
+    idDeputado (value) {
+      console.log(String(value))
+      this.idDeputados = String(value)
+    },
     request(){
       axios
         .get("https://dadosabertos.camara.leg.br/api/v2/deputados")

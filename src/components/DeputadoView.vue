@@ -10,6 +10,7 @@
         <div class="deputado-subtitle">
           <div class="deputado-subcontent">
             <b>Partido:</b>
+            {{ id }}
             {{ deputado.ultimoStatus.siglaPartido }}
           </div>
           <div class="deputado-subcontent">
@@ -58,7 +59,7 @@
         </div>
       </div>
       <div class="deputado-foto">
-        <img :src="deputado.ultimoStatus.urlFoto" style="width: 150%;">
+        <img :src="deputado.ultimoStatus.urlFoto" style="width: 190px;">
       </div>
     </div>
 
@@ -406,6 +407,12 @@
 import axios from 'axios'
 
 export default {
+  props: {
+    id: {
+      default: "",
+      type: String,
+    }
+  },
   data() {
     return {
       deputado: [],
@@ -428,12 +435,18 @@ export default {
     }
   },
   mounted() {
-    this.request();
+    this.request(); 
   },
+  watch: {
+    id(value){
+      this.request(value);
+    }
+  }, 
   methods:{
-    request(){
+    request(value){
+      console.log(value)
       axios
-        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/74646/")
+        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/" + value + "/")
         .then(response => {
           this.deputado = response.data.dados
         })
@@ -441,7 +454,7 @@ export default {
           console.log(error.response)
         })
       axios
-        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/74646/despesas")
+        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/" + value + "/despesas")
         .then(response => {
           this.deputadoDespesas = response.data.dados
         })
@@ -449,7 +462,7 @@ export default {
           console.log(error.response)
         })
       axios
-        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/74646/orgaos")
+        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/" + value + "/orgaos")
         .then(response => {
           this.deputadoOrgao = response.data.dados
         })
@@ -457,7 +470,7 @@ export default {
           console.log(error.response)
         })
       axios
-        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/74646/eventos")
+        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/" + value + "/eventos")
         .then(response => {
           this.deputadoEventos = response.data.dados
         })
@@ -465,7 +478,7 @@ export default {
           console.log(error.response)
         })
       axios
-        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/74646/discursos")
+        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/" + value + "/discursos")
         .then(response => {
           this.deputadoDiscurso = response.data.dados
         })
@@ -473,7 +486,7 @@ export default {
           console.log(error.response)
         })
       axios
-        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/74646/frentes")
+        .get("https://dadosabertos.camara.leg.br/api/v2/deputados/" + value + "/frentes")
         .then(response => {
           this.deputadoFrente = response.data.dados
         })
