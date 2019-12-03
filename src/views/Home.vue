@@ -41,12 +41,12 @@ export default {
 .content-button {
   cursor: pointer;
   text-align: justify;
-  padding: 6px 10px;
+  padding: 8px 12px;
   margin-left: 5%;
   border-radius: 10px;
   background-color: white;
   color: #0c5e3d;
-  font-size: 120%;
+  font-size: 145%;
   font-weight: bold;
 }
 
@@ -69,4 +69,18 @@ export default {
   font-size: 400%;
   font-weight: bold;
 }
+
+
+
+
+/*--------------------------------------*/
+
+
+@media screen and (max-width: 1000px){
+  .content-title{
+    font-size: 300%;
+  }
+}  
+
+
 </style>

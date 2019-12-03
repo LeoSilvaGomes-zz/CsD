@@ -479,6 +479,12 @@ export default {
 /*----------------------------------*/
 
 
- 
+
+
+@media screen and (max-width: 1000px){
+  .content-sidebar{
+    width: 100%;
+  }
+}  
 
 </style>

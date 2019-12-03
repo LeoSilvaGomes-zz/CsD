@@ -6,9 +6,12 @@
     />
     <DeputadoView 
       :id="idDeputados"
+      :style="telaDashboard"
+      @action="idDeputado"
     />
     <LandingPage
       v-if="idDeputados == ''"
+      :style="telaDashboard"
     />
   </div>
 </template>
@@ -35,12 +38,21 @@ export default {
         height: 0
       },
       telaSidebar: '',
+      telaDashboard: '',
       idDeputados: ''
     };
   },
   created() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize();
+    if(this.window.width < 1000){
+      this.telaDashboard = 'display:none;'
+      this.telaSidebar = ''
+    }
+    else {
+      this.telaDashboard = ''
+      this.telaSidebar = ''
+    }
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)
@@ -48,15 +60,19 @@ export default {
   methods: {
     handleResize() {
       this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
     },
     idDeputado(value) {
-      if(value){
-        console.log(value)
+      this.idDeputados = String(value);
+      if(this.idDeputados == '' && this.window.width < 1000){
+        this.telaSidebar = ''
+        this.telaDashboard = 'display:none;'
       }
-      else {
+      else if (this.idDeputados != '' && this.window.width < 1000){
+        this.telaDashboard = ''
+        this.telaSidebar = 'display:none;'
         console.log("leo")
       }
-      this.idDeputados = String(value);
     },
     request() {
       axios
@@ -76,7 +92,6 @@ export default {
 .container {
   display: flex;
 }
-
 
 
 </style>

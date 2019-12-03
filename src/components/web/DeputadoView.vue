@@ -2,9 +2,19 @@
   <div 
     class="container-deputado-view"
   >
+    <div class="topbar">
+      <font-awesome-icon
+        icon="chevron-left"
+        class="font-awesome-topbar"
+        @click="$emit('action', '')"
+      />
+    </div>
     <div 
       class="content"
     >
+      <div>
+        <img :src="deputado.ultimoStatus.urlFoto" style="width: 190px;">
+      </div>
       <div class="deputado-title">
         <div class="deputado-nome">
           {{ deputado.nomeCivil }}
@@ -59,9 +69,6 @@
           </div>
         </div>
       </div>
-      <div>
-        <img :src="deputado.ultimoStatus.urlFoto" style="width: 190px;">
-      </div>
     </div>
 
 
@@ -85,27 +92,27 @@
         class="each-card"
         :style="displayCardDespesas"
         v-for="despesas in deputadoDespesas"
-        :key="despesas.numDocumento"
+        :key="despesas.__ob__.dep.id"
       >
         <div
           class="content-card hover-context"
-          @click="selectCard(despesas.numDocumento)"
+          @click="selectCard(despesas.__ob__.dep.id)"
         >
           <p style="font-size: 90%;">{{ despesas.tipoDespesa }} <b>({{ despesas.dataDocumento }})</b></p>
           <font-awesome-icon
-            v-if="despesas.numDocumento != cardSelected"
+            v-if="despesas.__ob__.dep.id != cardSelected"
             icon="caret-right"
             class="font-awesome-despesas"
           />
           <font-awesome-icon
-            v-if="despesas.numDocumento == cardSelected"
+            v-if="despesas.__ob__.dep.id == cardSelected"
             icon="caret-down"
             class="font-awesome-despesas"
           />
         </div>
         <div
           class="card-info"
-          v-if="despesas.numDocumento == cardSelected"
+          v-if="despesas.__ob__.dep.id == cardSelected"
         > 
           <div class="deputado-sub">
             <div class="deputado-subcontent">
@@ -120,11 +127,11 @@
           <div class="deputado-sub">
             <div class="deputado-subcontent">
               <b>Valor do Documento:</b>
-              {{ despesas.valorDocumento }}
+              R$ {{ despesas.valorDocumento }}
             </div>
             <div class="deputado-subcontent">
               <b>Valor Liquido:</b>
-              {{ despesas.valorLiquido }}
+              R$ {{ despesas.valorLiquido }}
             </div>
           </div>
           <div class="deputado-sub">
@@ -152,7 +159,7 @@
         class="each-card"
         :style="displayCardOrgao"
         v-for="orgao in deputadoOrgao"
-        :key="orgao.__ob__.dep.idOrgao"
+        :key="orgao.__ob__.dep.id"
       >
         <div
           class="content-card hover-context"
@@ -569,6 +576,7 @@ export default {
 .content {
   display: flex;
   justify-content: space-between;
+  padding: 0px 5%;
 }
 
 .container-deputado-view {
@@ -679,6 +687,9 @@ export default {
   cursor: pointer;
 }
 
+.topbar {
+  display:none;
+}
 
 
 
@@ -686,6 +697,42 @@ export default {
 /*-----------------------*/
 
 
+
+@media screen and (max-width: 1000px){
+  .content-sidebar{
+    width: 100%;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .deputado-title {
+    width: 100%;
+  }
+
+  img {
+    padding-bottom: 15%;
+    padding-top: 20%;
+  }
+
+  .topbar {
+    display: flex;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    padding: 3% 0px;
+  }
+
+  .container-deputado-view{
+    margin-top: 0;
+  }
+
+  .font-awesome-topbar{
+    color: #2c3e50
+  }
+
+}  
 
 
 </style>
