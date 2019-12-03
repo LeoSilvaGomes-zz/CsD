@@ -17,7 +17,7 @@
         >
       </div>
       <div 
-        class="filter-container"
+        class="filter-container hover-context"
         @click="select()"
       >
         <p style="font-size: 90%;"><b>Filtro</b></p>
@@ -49,7 +49,7 @@
             :style="displayUf"  
           >
             <div
-              class="uf-content"
+              class="uf-content hover-context"
               v-for="uf in brstates"
               :key="uf"
               @click="filterUf(uf)"
@@ -101,7 +101,7 @@
             v-if="filteredPartido == ''"
           >
             <div
-              class="deputados-content"
+              class="deputados-content hover-context"
               v-if="filteredUf == ''"
             >
               <div
@@ -321,12 +321,6 @@ export default {
         this.filteredPartido = value.sigla;
       }
     },
-  },
-  computed: {
-    selectDeputado (value) {
-      this.id = value
-      return this.id
-    },
   }
 
 }
@@ -339,11 +333,13 @@ export default {
 <style>
 
 .container-sidebar{
+  cursor: default;
   height: 100vh;
   scroll-margin: none;
   display: flow-root;
-  width: 25%;
+  width: 40%;
 }
+
 
 .content-sidebar{
   width: 25%;
@@ -451,10 +447,6 @@ export default {
   justify-content: center;
 }
 
-.uf-content:hover{
-  background-color: #f0efef81;
-}
-
 .partido-filter{
   text-align: left;
   width: 100%;
@@ -465,7 +457,6 @@ export default {
   justify-content: space-between;
 }
 
-
 .partido-container{
   height: 10vh;
   overflow: auto;
@@ -473,19 +464,21 @@ export default {
   flex-direction: column;
 }
 
-.partido-content{
-  padding: 5px;
-  font-size: 15px;
-  justify-content: center;
-}
-
-.partido-content:hover{
-  background-color: #f0efef81;
+.hover-context:hover {
+  background-color: #dadadabd;
+  cursor: pointer;
 }
 
 .font-awesome-search{
   margin: 9.5px 0px;
   font-size: 100%;
 }
+
+
+
+/*----------------------------------*/
+
+
+ 
 
 </style>

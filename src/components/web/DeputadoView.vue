@@ -1,5 +1,7 @@
 <template>
-  <div class="container-deputado-view">
+  <div 
+    class="container-deputado-view"
+  >
     <div 
       class="content"
     >
@@ -10,7 +12,6 @@
         <div class="deputado-subtitle">
           <div class="deputado-subcontent">
             <b>Partido:</b>
-            {{ id }}
             {{ deputado.ultimoStatus.siglaPartido }}
           </div>
           <div class="deputado-subcontent">
@@ -58,7 +59,7 @@
           </div>
         </div>
       </div>
-      <div class="deputado-foto">
+      <div>
         <img :src="deputado.ultimoStatus.urlFoto" style="width: 190px;">
       </div>
     </div>
@@ -69,7 +70,7 @@
     >
 
       <div 
-        class="container-Card"
+        class="container-card hover-card"
         @click="selectDespesas()"
       >
         <p style="font-size: 90%;"><b>Despesas</b></p>
@@ -87,7 +88,7 @@
         :key="despesas.numDocumento"
       >
         <div
-          class="content-card"
+          class="content-card hover-context"
           @click="selectCard(despesas.numDocumento)"
         >
           <p style="font-size: 90%;">{{ despesas.tipoDespesa }} <b>({{ despesas.dataDocumento }})</b></p>
@@ -137,7 +138,7 @@
 
 
       <div 
-        class="container-Card"
+        class="container-card hover-card"
         @click="selectOrgao()"
       >
         <p style="font-size: 90%;"><b>Orgãos</b></p>
@@ -154,7 +155,7 @@
         :key="orgao.__ob__.dep.idOrgao"
       >
         <div
-          class="content-card"
+          class="content-card hover-context"
           @click="selectCard(orgao.idOrgao)"
         >
           <p style="font-size: 90%;"><b>{{ orgao.siglaOrgao }}</b></p>
@@ -195,7 +196,7 @@
       </div>
 
       <div 
-        class="container-Card"
+        class="container-card hover-card"
         @click="selectEventos()"
       >
         <p style="font-size: 90%;"><b>Eventos</b></p>
@@ -212,7 +213,7 @@
         :key="evento.id"
       >
         <div
-          class="content-card"
+          class="content-card hover-context"
           @click="selectCard(evento.id)"
         >
           <p style="font-size: 90%;"><b>{{ evento.descricaoTipo }}</b></p>
@@ -281,7 +282,7 @@
 
 
       <div 
-        class="container-Card"
+        class="container-card hover-card"
         @click="selectDiscurso()"
       >
         <p style="font-size: 90%;"><b>Discursos</b></p>
@@ -298,7 +299,7 @@
         :key="discurso.__ob__.dep.id"
       >
         <div
-          class="content-card"
+          class="content-card hover-context"
           @click="selectCard(discurso.id)"
         >
           <p style="font-size: 90%;"><b>{{ discurso.tipoDiscurso }}</b></p>
@@ -367,7 +368,7 @@
 
 
       <div 
-        class="container-Card"
+        class="container-card hover-card"
         @click="selectFrente()"
       >
         <p style="font-size: 90%;"><b>Frentes</b></p>
@@ -439,12 +440,12 @@ export default {
   },
   watch: {
     id(value){
+      console.log(value)
       this.request(value);
     }
   }, 
   methods:{
     request(value){
-      console.log(value)
       axios
         .get("https://dadosabertos.camara.leg.br/api/v2/deputados/" + value + "/")
         .then(response => {
@@ -572,7 +573,8 @@ export default {
 
 .container-deputado-view {
   margin: 5%; 
-  width: 60%;
+  margin-top: 8%;
+  width: 100%;
   height: 100%;
 }
 
@@ -598,11 +600,7 @@ export default {
   justify-content: space-between;
 }
 
-.deputado-foto {
-  margin-right: 10%;
-}
-
-.container-Card{
+.container-card{
   padding: 0px 15px;
   margin: 10px 0px 5px 0px;
   text-align: left;
@@ -666,5 +664,28 @@ export default {
   font-size: 130%;
   color: #1a1919b6;
 }
+
+.deputado-title {
+  width: 55%;
+}
+
+.hover-context:hover {
+  background-color: #dadadabd;
+  cursor: pointer;
+}
+
+.hover-card:hover {
+  background-color: #16442ff1;
+  cursor: pointer;
+}
+
+
+
+
+
+/*-----------------------*/
+
+
+
 
 </style>
