@@ -1,29 +1,14 @@
-# CsD
+# Conheça seus Deputados!
 
-## Project setup
-```
-npm install
-```
+## Visão geral
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Conheça seus Deputados, carinhosamente conhecido como CsD, propõem ser um portal de transparência de informação referente a uma API disponibilizado pela camara dos deputados ( https://dadosabertos.camara.leg.br/swagger/api.html ), que nos fornece informações sobre os deputados do Brasil e suas atvidades.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+A aplicação consiste em dar uma visualição mais atrativa para a população, tanto como usuário incial, quanto para usuários mais   familiarizados com tecnologias. Dessa forma, ela tenta ser um meio democrático de atingir um publio e suprir suas necessidades. 
 
-### Run your tests
+## Execução do container
 ```
-npm run test
-```
+sudo docker-compose up --build (Para a primeira execução)
 
-### Lints and fixes files
+sudo docker-compose up
 ```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
