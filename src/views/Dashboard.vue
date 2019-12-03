@@ -18,9 +18,9 @@
 
 <script>
 import axios from "axios";
-import Sidebar from "../components/web/Sidebar";
-import DeputadoView from "../components/web/DeputadoView";
-import LandingPage from "../components/web/LandingPage";
+import Sidebar from "../components/Sidebar";
+import DeputadoView from "../components/DeputadoView";
+import LandingPage from "../components/LandingPage";
 
 export default {
   components: {
